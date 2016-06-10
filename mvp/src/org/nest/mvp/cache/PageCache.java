@@ -13,8 +13,16 @@ public class PageCache {
 	private Map<String, Page> page = new HashMap<String, Page>();
 	private Map<String, Map<String, String>> pagecfg = new HashMap<String, Map<String, String>>();
 	private Map<String, Map<String, Map<String, String>>> comcfg = new HashMap<String, Map<String, Map<String, String>>>();
+	private static final PageCache pc = new PageCache();
 
-	public void putCom(Component cmp) {
+	private PageCache() {
+	}
+
+	public static PageCache newInstance() {
+		return pc;
+	}
+
+	public void setCom(Component cmp) {
 		com.put(cmp.getId(), cmp);
 	}
 

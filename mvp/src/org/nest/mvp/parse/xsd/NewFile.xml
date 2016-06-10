@@ -2,19 +2,30 @@
 <!-- <pages xmlns="http://www.example.org/nestpage" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:schemaLocation="http://www.example.org/nestpage nestpage.xsd "> -->
 <pages>
-	<component id="123" beanid="" class="" jslib="" jsobjname=""></component>
-	<template id="123" beanid="" class="" jslib="" jsobjname="">
+	<component id="123" beanid="beanid" class="class" jslib="jslib" jsobjname="jsobjname"></component>
+	<template id="123" beanid="beanid" class="class" jslib="jslib" jsobjname="jsobjname">
 	</template>
-	<page url="123" beanid="" class="" jslib="" csslib="" templateid="123" path="">
-		<config key="" value="" />
-		<config key="" value="" />
-		<config key="" value="" />
-		<config key="" value="" />
-		<cmp id='123' view='123'>
-			<config key="" value="" />
-			<config key="" value="" />
-			<config key="" value="" />
-			<config key="" value="" />
+	<page url="123" beanid="beanid" class="class" superurl="superurl"
+		jslib="jslib" csslib="csslib" templateid="templateid" path="path">
+		<map key="config1" value="config" />
+		<map key="config2" value="config" />
+		<map key="config3" value="config" />
+		<map key="config4" value="config" />
+		<cmp cmpid='123' view='123'>
+			<config key="123c123" value="123c123111" />
+		</cmp>
+	</page>
+	<component id="1234" beanid="1234" class="1234" jslib="1234" jsobjname="1234"></component>
+	<template id="1234" beanid="1234" class="1234" jslib="1234" jsobjname="1234">
+	</template>
+	<page url="1234" beanid="beanid" class="class" superurl="superurl"
+		jslib="jslib" csslib="csslib" templateid="templateid" path="path">
+		<map key="config5" value="config" />
+		<map key="config6" value="config" />
+		<map key="config7" value="config" />
+		<map key="config8" value="config" />
+		<cmp cmpid='123' view='123'>
+			<config key="123c" value="123c" />
 		</cmp>
 	</page>
 </pages>

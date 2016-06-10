@@ -10,7 +10,6 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.nest.core.exception.NestException;
 import org.nest.mvp.cache.PageCache;
-import org.nest.mvp.cache.ReadPageCache;
 import org.nest.mvp.parse.handler.ParseNestHandler;
 
 public class ParseXml {
@@ -30,10 +29,8 @@ public class ParseXml {
 		try {
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser parser = factory.newSAXParser();
-			PageCache pc = new PageCache();
-			handler.setPc(pc);
+			handler.setPc(PageCache.newInstance());
 			parser.parse(io, handler);
-			ReadPageCache.newInstance().setPc(pc);
 		} catch (Exception e) {
 			throw new NestException(e);
 		}
@@ -46,12 +43,5 @@ public class ParseXml {
 			// TODO Auto-generated catch block
 			throw new NestException(e);
 		}
-	}
-
-	public static void main(String[] args) throws NestException {
-		ParseXml.getInstance()
-				.readFile(
-						Class.class
-								.getResourceAsStream("/org/nest/mvp/parse/xsd/NewFile.xml"));
 	}
 }

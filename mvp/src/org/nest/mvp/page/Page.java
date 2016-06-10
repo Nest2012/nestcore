@@ -10,6 +10,10 @@ import org.nest.mvp.component.Component;
 public class Page extends Component {
 	private String tempid = null;
 
+	private String cssid = null;
+
+	private String superid = null;
+
 	private String path = null;
 
 	public String getPath() {
@@ -26,6 +30,22 @@ public class Page extends Component {
 
 	public void setTempid(String tempid) {
 		this.tempid = tempid;
+	}
+
+	public String getCssid() {
+		return cssid;
+	}
+
+	public void setCssid(String cssid) {
+		this.cssid = cssid;
+	}
+
+	public String getSuperid() {
+		return superid;
+	}
+
+	public void setSuperid(String superid) {
+		this.superid = superid;
 	}
 
 }
