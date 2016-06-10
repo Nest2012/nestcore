@@ -1,3 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/nestpage" xmlns:tns="http://www.example.org/nestpage" elementFormDefault="qualified">
-</schema>
+<xsd:schema targetNamespace="http://www.example.org/nestpage" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.example.org/nestpage">
+    <xsd:complexType name="component">
+    	<xsd:sequence>
+    		<xsd:element name="id" type="xsd:string"></xsd:element>
+    		<xsd:element name="beanid" type="xsd:string"></xsd:element>
+    		<xsd:element name="class" type="xsd:string"></xsd:element>
+    		<xsd:element name="jslib" type="xsd:string"></xsd:element>
+    		<xsd:element name="jsobjname" type="xsd:string"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    
+    <xsd:complexType name="template">
+    	<xsd:sequence>
+    		<xsd:element name="id" type="xsd:string"></xsd:element>
+    		<xsd:element name="jslib" type="xsd:string"></xsd:element>
+    		<xsd:element name="jsobjname" type="xsd:string"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    
+    <xsd:complexType name="page">
+    	<xsd:sequence>
+    		<xsd:element name="template" type="xsd:string"></xsd:element>
+    		<xsd:element name="beanid" type="xsd:string"></xsd:element>
+    		<xsd:element name="class" type="xsd:string"></xsd:element>
+    		<xsd:element name="url" type="xsd:string"></xsd:element>
+    		<xsd:element name="page" type="xsd:string"></xsd:element>
+    		<xsd:element name="config" type="config"></xsd:element>
+    		<xsd:element name="comps" type="comps" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="comps">
+    	<xsd:sequence>
+    		<xsd:element name="compid" type="xsd:string"></xsd:element>
+    		<xsd:element name="config" type="config"></xsd:element>
+    		<xsd:element name="viewid" type="xsd:string"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="config">
+    	<xsd:sequence>
+    		<xsd:element name="values" type="map" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="map">
+    	<xsd:sequence>
+    		<xsd:element name="key" type="xsd:string"></xsd:element>
+    		<xsd:element name="value" type="xsd:string"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+
+    <xsd:element name="pages" type="pages"></xsd:element>
+
+
+    <xsd:complexType name="pages">
+    	<xsd:sequence>
+    		<xsd:element name="page" type="page"></xsd:element>
+    		<xsd:element name="component" type="component"></xsd:element>
+    		<xsd:element name="template" type="template"></xsd:element>
+    		<xsd:element name="import" type="xsd:string"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:attribute name="id" type="xsd:string"></xsd:attribute>
+</xsd:schema>

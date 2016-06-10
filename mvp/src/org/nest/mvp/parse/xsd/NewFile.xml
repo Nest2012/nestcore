@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <pages xmlns="http://www.example.org/nestpage" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.example.org/nestpage nestpage.xsd "> -->
+<pages>
+	<component id="123" beanid="" class="" jslib="" jsobjname=""></component>
+	<template id="123" beanid="" class="" jslib="" jsobjname="">
+	</template>
+	<page url="123" beanid="" class="" jslib="" csslib="" templateid="123" path="">
+		<config key="" value="" />
+		<config key="" value="" />
+		<config key="" value="" />
+		<config key="" value="" />
+		<cmp id='123' view='123'>
+			<config key="" value="" />
+			<config key="" value="" />
+			<config key="" value="" />
+			<config key="" value="" />
+		</cmp>
+	</page>
+</pages>
+
+
