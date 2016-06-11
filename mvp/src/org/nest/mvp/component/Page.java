@@ -1,6 +1,4 @@
-package org.nest.mvp.page;
-
-import org.nest.mvp.component.Component;
+package org.nest.mvp.component;
 
 /**
  * Portal定义的页面对象，保存组织页面的基本配置信息
@@ -10,7 +8,7 @@ import org.nest.mvp.component.Component;
 public class Page extends Component {
 	private String tempid = null;
 
-	private String cssid = null;
+	private String csslib = null;
 
 	private String superid = null;
 
@@ -32,12 +30,12 @@ public class Page extends Component {
 		this.tempid = tempid;
 	}
 
-	public String getCssid() {
-		return cssid;
+	public String getCssLib() {
+		return csslib;
 	}
 
-	public void setCssid(String cssid) {
-		this.cssid = cssid;
+	public void setCssLib(String csslib) {
+		this.csslib = csslib;
 	}
 
 	public String getSuperid() {

@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.nest.mvp.component.Component;
+import org.nest.mvp.component.Page;
 import org.nest.mvp.component.Template;
-import org.nest.mvp.page.Page;
 
 public class PageCache {
 	private Map<String, Component> com = new HashMap<String, Component>();

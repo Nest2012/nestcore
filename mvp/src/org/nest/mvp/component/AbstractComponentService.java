@@ -18,27 +18,26 @@ import org.nest.mvp.server.ServerContext;
 public class AbstractComponentService implements ComponentService {
 	private final static Logger logger = Logger
 			.getLogger(AbstractComponentService.class);
-	private static ThreadLocal tl = new ThreadLocal();
+
 	private static ThreadLocal tlcom = new ThreadLocal();
-	protected RCPConsole console = null;
 
 	@Override
 	public HttpServletRequest getRequest() {
-		return ((ServerContext) tl.get()).getRequest();
+		return ServerContext.getContext().getRequest();
 	}
 
 	@Override
 	public HttpServletResponse getResponse() {
-		return ((ServerContext) tl.get()).getResponse();
+		return ServerContext.getContext().getResponse();
 	}
 
 	@Override
 	public HttpSession getSession() {
-		return ((ServerContext) tl.get()).getRequest().getSession();
+		return ServerContext.getContext().getRequest().getSession();
 	}
 
 	public Servlet getPageServlet() {
-		return ((ServerContext) tl.get()).getServlet();
+		return ServerContext.getContext().getServlet();
 	}
 
 	/**
@@ -54,20 +53,12 @@ public class AbstractComponentService implements ComponentService {
 	@Override
 	public RCPConsole getConsole() {
 		// TODO Auto-generated method stub
-		return ((ServerContext) tl.get()).getConsole();
+		return ServerContext.getContext().getConsole();
 	}
 
 	@Override
 	public void setComponent(Component com) {
 		tlcom.set(com);
-	}
-
-	/**
-	 * 设置服务端运行环境变量
-	 */
-	@Override
-	public void setServerContext(ServerContext context) {
-		tl.set(context);
 	}
 
 	/**
@@ -78,11 +69,10 @@ public class AbstractComponentService implements ComponentService {
 	@Override
 	public void setConsole(String consoletype) {
 		// 当前版本不区分终端类型
-		((ServerContext) tl.get()).setConsole(RCPConsoleManager
-				.createConsole(this.getRequest()));
+		ServerContext.getContext().setConsole(
+				RCPConsoleManager.createConsole(this.getRequest()));
 	}
 
-	@Override
 	public Object runFunction(String mothedname, Object[] params)
 			throws SecurityException, NoSuchMethodException,
 			IllegalArgumentException, IllegalAccessException,
@@ -121,10 +111,10 @@ public class AbstractComponentService implements ComponentService {
 	public ComponentService getComponent(String serviceid)
 			throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, NestException {
-		Component com =null;// ConsoleManager.getManeger().getComponentByServiceid(serviceid);
+		Component com = null;// ConsoleManager.getManeger().getComponentByServiceid(serviceid);
 		ComponentService cs = com.getService();
 		cs.setComponent(com);
-		cs.setServerContext((ServerContext) tl.get());
+	//	cs.setServerContext((ServerContext) tl.get());
 		return cs;
 	}
 

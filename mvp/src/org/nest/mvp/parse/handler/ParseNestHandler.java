@@ -8,8 +8,8 @@ import org.nest.core.exception.NestException;
 import org.nest.mvp.cache.PageCache;
 import org.nest.mvp.component.Component;
 import org.nest.mvp.component.ComponentService;
+import org.nest.mvp.component.Page;
 import org.nest.mvp.component.Template;
-import org.nest.mvp.page.Page;
 import org.nest.mvp.parse.ParseXml;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -124,7 +124,7 @@ public class ParseNestHandler extends DefaultHandler {
 	private void putPage(Attributes att) throws NestException {
 		Page com = new Page();
 		try {
-			com.setCssid(att.getValue("csslib"));
+			com.setCssLib(att.getValue("csslib"));
 			com.setTempid(att.getValue("templateid"));
 			com.setSuperid(att.getValue("superurl"));
 			setAttr(com, att);

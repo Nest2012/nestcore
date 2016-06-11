@@ -11,7 +11,15 @@ public class ServerContext {
 	HttpServletResponse response = null;
 	Servlet pageservlet = null;
 	RCPConsole console = null;
-
+	private static ThreadLocal<ServerContext> tl = new ThreadLocal<ServerContext>();
+	
+	public static ServerContext getContext(){
+		return tl.get();
+	}
+	
+	public void setContext(){
+		tl.set(this);
+	}
 	public RCPConsole getConsole() {
 		return console;
 	}
@@ -25,12 +33,7 @@ public class ServerContext {
 		this.request = request;
 		this.response = response;
 		this.pageservlet = pageservlet;
-	}
-
-	public ServerContext(HttpServletRequest request,
-			HttpServletResponse response) {
-		this.request = request;
-		this.response = response;
+		setContext();
 	}
 
 	public HttpServletRequest getRequest() {

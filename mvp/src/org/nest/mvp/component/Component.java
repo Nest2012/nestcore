@@ -1,6 +1,5 @@
 package org.nest.mvp.component;
 
-import org.apache.log4j.Logger;
 
 /**
  * 组件配置对象

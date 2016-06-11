@@ -11,7 +11,6 @@ import org.nest.core.exception.NestException;
 import org.nest.mvp.console.RCPConsole;
 import org.nest.mvp.server.ServerContext;
 
-
 /**
  * 组件服务接口，定义了组件服务的标准接口
  * 
@@ -37,11 +36,6 @@ public interface ComponentService {
 	 * @param component
 	 */
 	public Component getComponent();
-
-	/**
-	 * 设置服务端运行环境变量
-	 */
-	public void setServerContext(ServerContext context);
 
 	/**
 	 * 设置终端类型
