@@ -22,23 +22,23 @@ public class ParseXml {
 	public static final ParseXml getInstance() {
 		return PIX;
 	}
-
+	
 	private ParseNestHandler handler = new ParseNestHandler();
 
-	public void readFile(InputStream io) throws NestException {
+	public void readFile(InputStream io,PageCache cache) throws NestException {
 		try {
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser parser = factory.newSAXParser();
-			handler.setPc(PageCache.newInstance());
+			handler.setPc(cache);
 			parser.parse(io, handler);
 		} catch (Exception e) {
 			throw new NestException(e);
 		}
 	}
 
-	public void readFile(File io) throws NestException {
+	public void readFile(File io,PageCache cache) throws NestException {
 		try {
-			this.readFile(new FileInputStream(io));
+			this.readFile(new FileInputStream(io),cache);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			throw new NestException(e);

@@ -12,7 +12,7 @@ import org.nest.mvp.component.AbstractComponentService;
 public class RCPConsoleComponentService extends AbstractComponentService {
 
     @Override
-    public Map loadComponent(HttpServletRequest request, HttpServletResponse response, Map config) throws Exception {
+    public Map loadComponent(Map config) throws Exception {
 
         return null;
     }

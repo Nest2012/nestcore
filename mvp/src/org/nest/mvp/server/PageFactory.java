@@ -10,7 +10,6 @@ import org.nest.mvp.server.builder.impl.PageBuilderOut;
 public class PageFactory {
 	public static String encoding = "UTF-8";
 	public static String page = ".page";
-	public static String rcp = ".rcp";
 	public static String ser = ".ser";
 	public static String down = ".down";
 	public static Class<? extends IPageBuilder> builderClass = null;

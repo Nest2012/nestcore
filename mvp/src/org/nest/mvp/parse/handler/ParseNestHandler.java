@@ -22,12 +22,11 @@ public class ParseNestHandler extends DefaultHandler {
 	private static String template = "template";
 	private static String config = "config";
 	private static String cmp = "cmp";
-
+	private String cmpid=null;
 	private String url = null;
 
 	private PageCache pc = null;
 
-	private String cmpid = null;
 	private String view = null;
 
 	private Map<String, String> pagecfg = null;
@@ -60,11 +59,10 @@ public class ParseNestHandler extends DefaultHandler {
 				if (url == null) {
 					return;
 				}
-				// cmpid='123' view='123'
-				cmpid = att.getValue("cmpid");
+				cmpid=att.getValue("cmpid");
 				view = att.getValue("view");
 				comcfg = new HashMap<String, String>();
-				comcfg.put("view", view);
+				comcfg.put("id", view);
 			} else if (config.equals(qName)) {
 				if (url == null) {
 					return;
@@ -85,13 +83,14 @@ public class ParseNestHandler extends DefaultHandler {
 			this.pc.setPagecfg(url, pagecfg);
 			pagecfg = null;
 			view = null;
-			cmpid = null;
 			comcfg = null;
 			url = null;
+			cmpid=null;
 		} else if (cmp.equals(qName)) {
-			this.pc.addComcfg(url, cmpid, this.comcfg);
-			cmpid = null;
+			this.pc.addComcfg(url,cmpid, view, this.comcfg);
 			comcfg = null;
+			cmpid=null;
+			view = null;
 		}
 	}
 
@@ -100,23 +99,38 @@ public class ParseNestHandler extends DefaultHandler {
 		Component com = new Component();
 		try {
 			com.setJsObjectName(att.getValue("jsobjname"));
-			setAttr(com, att);
+			com.setId(att.getValue("id"));
+			com.setJsLib(att.getValue("jslib"));
+			String cls = att.getValue("class");
+			String beanid = att.getValue("beanid");
+			ComponentService cs = null;
+			if (cls == null || cls.trim().length() == 0) {
+				try {
+					cs = (ComponentService) Class.forName(cls).newInstance();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else if (beanid != null && beanid.trim().length() > 0) {
+				cs = (ComponentService) BeanUtil
+						.getBean(att.getValue("beanid"));
+			} else {
+				throw new NullPointerException("没有找到bean注册信息");
+			}
+			com.setService(cs);
 			this.getPc().setCom(com);
 		} catch (Exception e) {
 			throw new NestException(com.getId() + "加载失败，没有成功加载bean", e);
 		}
 	}
 
-	// <template id="123" beanid="" class="" jslib="" jsobjname="">
+	// <template id="123" jslib="" jsobjname="">
 	private void putTemplate(Attributes att) throws NestException {
 		Template com = new Template();
-		try {
-			com.setJsObjectName(att.getValue("jsobjname"));
-			setAttr(com, att);
-			this.getPc().setTem(com);
-		} catch (Exception e) {
-			throw new NestException(com.getId() + "加载失败，没有成功加载bean", e);
-		}
+		com.setId(att.getValue("id"));
+		com.setJsLib(att.getValue("jslib"));
+		com.setJsObjectName(att.getValue("jsobjname"));
+		this.getPc().setTem(com);
 	}
 
 	// <page url="123" beanid="" class="" jslib="" csslib="" templateid="123"
@@ -127,9 +141,25 @@ public class ParseNestHandler extends DefaultHandler {
 			com.setCssLib(att.getValue("csslib"));
 			com.setTempid(att.getValue("templateid"));
 			com.setSuperid(att.getValue("superurl"));
-			setAttr(com, att);
+			com.setJsLib(att.getValue("jslib"));
+			String cls = att.getValue("class");
+			String beanid = att.getValue("beanid");
+			ComponentService cs = null;
+			if (cls != null && cls.trim().length() > 0) {
+				try {
+					cs = (ComponentService) Class.forName(cls).newInstance();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else if (beanid != null && beanid.trim().length() > 0) {
+				cs = (ComponentService) BeanUtil
+						.getBean(att.getValue("beanid"));
+			}
+			com.setService(cs);
 			com.setId(att.getValue("url"));
-			url=com.getId();
+			com.setRegin(att.getValue("regin"));
+			url = com.getId();
 			this.getPc().setPage(com);
 		} catch (Exception e) {
 			throw new NestException(com.getId() + "加载失败，没有成功加载bean", e);
@@ -138,29 +168,12 @@ public class ParseNestHandler extends DefaultHandler {
 		pagecfg = new HashMap<String, String>();
 	}
 
-	private void setAttr(Component com, Attributes att) {
-		com.setId(att.getValue("id"));
-		com.setJsLib(att.getValue("jslib"));
-		String cls = att.getValue("class");
-		ComponentService cs = null;
-		if (cls == null || cls.trim().length() == 0) {
-			try {
-				cs = (ComponentService) Class.forName(cls).newInstance();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} else {
-			BeanUtil.getBean(att.getValue("beanid"));
-		}
-		com.setService(cs);
-	}
-
 	public static void main(String[] args) throws NestException {
 		ParseXml.getInstance()
 				.readFile(
 						Class.class
-									.getResourceAsStream("/org/nest/mvp/parse/xsd/NewFile.xml"));
-		System.out.println(PageCache.newInstance());
+								.getResourceAsStream("/org/nest/mvp/parse/xsd/NewFile.xml"),
+						new PageCache());
+		// System.out.println(PageCache.newInstance());
 	}
 }

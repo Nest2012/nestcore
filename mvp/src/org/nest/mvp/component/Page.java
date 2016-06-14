@@ -14,6 +14,16 @@ public class Page extends Component {
 
 	private String path = null;
 
+	private String regin = null;
+
+	public String getRegin() {
+		return regin;
+	}
+
+	public void setRegin(String regin) {
+		this.regin = regin;
+	}
+
 	public String getPath() {
 		return path;
 	}

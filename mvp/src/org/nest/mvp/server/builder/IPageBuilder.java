@@ -11,8 +11,6 @@ public interface IPageBuilder {
 
 	void setContextPath(String string);
 
-	void buildHeadContent();
-
 	void buildPageContent() throws ServletException, IOException, NestException;
 
 	void out() throws IOException, ServletException;

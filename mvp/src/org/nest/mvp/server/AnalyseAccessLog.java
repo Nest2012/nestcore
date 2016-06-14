@@ -1,11 +1,5 @@
 package org.nest.mvp.server;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -26,6 +20,6 @@ public class AnalyseAccessLog {
 
 	public void writeAnalyseLog(String startDate, long times,
 			HttpServletRequest req) {
-
+		logger.debug("");
 	}
 }

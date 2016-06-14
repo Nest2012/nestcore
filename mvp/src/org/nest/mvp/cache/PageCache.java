@@ -13,20 +13,14 @@ public class PageCache {
 	private Map<String, Page> page = new HashMap<String, Page>();
 	private Map<String, Map<String, String>> pagecfg = new HashMap<String, Map<String, String>>();
 	private Map<String, Map<String, Map<String, String>>> comcfg = new HashMap<String, Map<String, Map<String, String>>>();
-	private static final PageCache pc = new PageCache();
-
-	private PageCache() {
-	}
-
-	public static PageCache newInstance() {
-		return pc;
-	}
+	private Map<String, Map<String, String>> comview = new HashMap<String, Map<String, String>>();
 
 	public void setCom(Component cmp) {
 		com.put(cmp.getId(), cmp);
 	}
 
 	public Component getCom(String id) {
+		com.get(id).getService().setComponent(com.get(id));
 		return com.get(id);
 	}
 
@@ -58,11 +52,17 @@ public class PageCache {
 		return comcfg.get(key);
 	}
 
-	public void addComcfg(String key, String cmpid, Map<String, String> cfg) {
+	public void addComcfg(String key, String view,String beanid, Map<String, String> cfg) {
 		if (comcfg.get(key) == null) {
 			comcfg.put(key, new HashMap<String, Map<String, String>>());
+			comview.put(key, new HashMap<String, String>());
 		}
-		comcfg.get(key).put(cmpid, cfg);
+		comcfg.get(key).put(view, cfg);
+		comview.get(key).put(view, beanid);
+	}
+
+	public Map<String, String> getViewCfg(String key) {
+		return comview.get(key);
 	}
 
 }

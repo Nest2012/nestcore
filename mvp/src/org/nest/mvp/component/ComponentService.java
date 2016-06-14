@@ -27,8 +27,7 @@ public interface ComponentService {
 	 *            组件默认配置
 	 * @return
 	 */
-	public Map loadComponent(HttpServletRequest request,
-			HttpServletResponse response, Map config) throws Exception;
+	public Map loadComponent(Map config) throws Exception;
 
 	/**
 	 * 获取组件定义
@@ -58,14 +57,6 @@ public interface ComponentService {
 	public HttpServletResponse getResponse();
 
 	public HttpSession getSession();
-
-	/**
-	 * 获取服务类实际类型
-	 * 
-	 * @return
-	 * @throws
-	 */
-	public Class getClazz();
 
 	/**
 	 * 实现服务接口的反射调用机制

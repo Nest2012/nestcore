@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import org.nest.core.exception.NestException;
 import org.nest.core.exception.NestRuntimeException;
 import org.nest.mvp.cache.PageCache;
+import org.nest.mvp.cache.PageCacheManager;
 import org.nest.mvp.component.Component;
 import org.nest.mvp.component.ComponentService;
 import org.nest.mvp.component.Page;
@@ -36,7 +37,11 @@ public class PageServlet extends HttpServlet {
 
 	private ServletConfig config = null;
 
-	private static PageCache pc = PageCache.newInstance();
+	// private static PageCache pc = ReadPageCache.newInstance().getPc();
+
+	private PageCache getPageCache() {
+		return PageCacheManager.newInstance().getPc();
+	}
 
 	/**
 	 * 处理portal框架初始化设置
@@ -63,24 +68,17 @@ public class PageServlet extends HttpServlet {
 		try {
 			// 从URL中分离模型编码和行为
 			// web远程调用与路径无关。
-
-			// edited by zhangkai 修改路径的判断方式，原方式在在有contextname情况下有问题
-			if ("webservice.rcp".equals(requestURI.substring(requestURI
-					.lastIndexOf("/") + 1))) {
-				webservice(request, response);
+			if (PageFactory.ser.endsWith(exname)) {
+				rpcservice(request, response);
 				return;
 			}
-			// down远程调用与路径无关。
-			if (".down"
-					.equals(requestURI.substring(requestURI.lastIndexOf("/") + 1))) {
+			// 下载请求的坑还很大，需要重写。目前照原来方式处理。
+			if (PageFactory.down.endsWith(exname)) {
 				consoleDown(request, response);
 				return;
 			}
-			if (".page".endsWith(exname)) {
+			if (PageFactory.page.endsWith(exname)) {
 				pageserver(requestURI, request, response);
-				return;
-			} else if (".rcp".endsWith(exname)) {
-				rcpserver(requestURI, request, response);
 				return;
 			} else {
 				response.sendError(404);
@@ -99,8 +97,8 @@ public class PageServlet extends HttpServlet {
 			HttpServletResponse response) throws IOException, ServletException,
 			NestException {
 		String pageid = requestURI.substring(request.getContextPath().length(),
-				requestURI.lastIndexOf(".page"));
-		Page page = pc.getPage(pageid);
+				requestURI.lastIndexOf(PageFactory.page));
+		Page page = getPageCache().getPage(pageid);
 		requestURI = null;
 		response.setHeader("Pragma", "No-cache");
 		response.setHeader("Cache-Control", "no-cache");
@@ -118,18 +116,16 @@ public class PageServlet extends HttpServlet {
 
 		// 生成页面模板
 		IPageBuilder pageBuilder = PageFactory.getBuilder(page);// new
-																	// PageBuilder(page);
+																// PageBuilder(page);
 		pageBuilder.setContextPath(request.getScheme() + "://"
 				+ request.getServerName() + ":" + request.getServerPort()
 				+ request.getContextPath());
-		// 生成页头加载内容
-		pageBuilder.buildHeadContent();
 		// 生成页面内容及脚本
 		pageBuilder.buildPageContent();
 		pageBuilder.out();
 	}
 
-	private void webservice(HttpServletRequest request,
+	private void rpcservice(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException,
 			NestException {
 		String serverid = request.getParameter("serverid");
@@ -137,7 +133,7 @@ public class PageServlet extends HttpServlet {
 		String paramjson = request.getParameter("paramjson");
 		String consoletype = request.getParameter("rcpconsole");
 
-		Component component = pc.getCom(serverid);
+		Component component = getPageCache().getCom(serverid);
 		if (null == component) {
 			response.sendError(404);
 			return;
@@ -167,49 +163,6 @@ public class PageServlet extends HttpServlet {
 		}
 	}
 
-	private void rcpserver(String requestURI, HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException,
-			NestException {
-		response.setContentType("text/html;charset=" + PageFactory.encoding);
-		String serverurl = requestURI.substring(request.getContextPath()
-				.length(), requestURI.lastIndexOf("/"));
-		String serviceid = requestURI
-				.substring(requestURI.lastIndexOf("/") + 1,
-						requestURI.lastIndexOf(".rcp"));
-		String method = request.getParameter("method");
-		String paramjson = request.getParameter("paramjson");
-		String consoletype = request.getParameter("rcpconsole");
-
-		// 生成
-		// Component component = ConsoleManager.getManeger().getComponentByRCP(
-		// serverurl, serviceid);
-		Component component = null;
-		if (null == component) {
-			response.sendError(404);
-			return;
-		}
-		try {
-			// 获取服务的实现类
-			ComponentService service = component.getService();
-
-			ServerContext context = new ServerContext(request, response, this);
-			// 设置终端类型
-			if (consoletype != null)
-				service.setConsole(consoletype);
-			responseWriter(response, rcpInvoke(service, method, paramjson));
-		} catch (NestException e) {
-			throw e;
-		} catch (Exception e) {
-			// logger.error("", e);
-			ServletException se = new ServletException(e);
-			se.setStackTrace(e.getStackTrace());
-			throw se;
-		} finally {
-			// 关闭终端
-			if (consoletype != null)
-				RCPConsoleManager.colseConsole(request.getSession().getId());
-		}
-	}
 
 	/**
 	 * 执行远程调用方法
@@ -221,12 +174,13 @@ public class PageServlet extends HttpServlet {
 	 * @return
 	 * @throws NestException
 	 */
+	@SuppressWarnings("rawtypes")
 	private String rcpInvoke(ComponentService service, String method,
 			String paramjson) throws NestException {
 		Object[] params = null;
-		long start = System.currentTimeMillis();
-		String startDate = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
-				.format(new Date());
+		//long start = System.currentTimeMillis();
+		//String startDate = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
+		//		.format(new Date());
 		try {
 			// 构造调用参数对象
 			ObjectWriter writer = new ObjectWriter();
@@ -268,7 +222,7 @@ public class PageServlet extends HttpServlet {
 		OutputStream out = null;
 
 		out = response.getOutputStream();
-		byte[] b = new byte[1024];
+		byte[] b = new byte[20480];
 		int l = 0;
 		while ((l = s.read(b)) != -1) {
 			out.write(b, 0, l);
@@ -277,17 +231,8 @@ public class PageServlet extends HttpServlet {
 		s.close();
 	}
 
-	private void responseWriter(HttpServletResponse response, byte[] s)
-			throws IOException {
-		OutputStream out = null;
-		if (s == null) {
-			return;
-		}
-		out = response.getOutputStream();
-		out.write(s);
-		out.flush();
-	}
 
+	@SuppressWarnings("rawtypes")
 	private void consoleDown(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 		try {

@@ -1,10 +1,12 @@
 package org.nest.mvp.server.builder.impl;
 
 import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 
+import org.nest.mvp.server.PageFactory;
 import org.nest.mvp.server.ServerContext;
 import org.nest.mvp.server.builder.IPageBuilderOut;
 
@@ -98,8 +100,17 @@ public class PageBuilderOut implements IPageBuilderOut {
 		StringBuilder sbs = new StringBuilder(11240);
 		initLoadInfo(sbs);
 		buildHead(sbs);
+		Writer w=ServerContext.getContext().getResponse().getWriter();
 		if (page == null) {
-			// page = DEFAULT_PAGE;
+			w.append("<html xmlns=\"http://www.w3.org/1999/xhtml\">");
+			w.append("<head>");
+			w.append("<meta http-equiv=\"Content-Type\" content=\"text/html; charset="+PageFactory.encoding+"\" />");
+			w.append(sbs);
+			w.append("</head>");
+			w.append("<body>");
+			w.append("</body>");
+			w.append(bodyStr);
+			w.append("</html>");
 		} else {
 			ServerContext
 					.getContext()
@@ -107,9 +118,9 @@ public class PageBuilderOut implements IPageBuilderOut {
 					.getRequestDispatcher(page)
 					.include(ServerContext.getContext().getRequest(),
 							ServerContext.getContext().getResponse());
+			w.append(sbs);
+			w.append(bodyStr);
 		}
-		ServerContext.getContext().getResponse().getWriter().append(sbs);
-		ServerContext.getContext().getResponse().getWriter().append(bodyStr);
-		ServerContext.getContext().getResponse().getWriter().flush();
+		w.flush();
 	}
 }

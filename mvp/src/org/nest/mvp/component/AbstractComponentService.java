@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.nest.core.exception.NestException;
+import org.nest.mvp.cache.PageCacheManager;
 import org.nest.mvp.console.RCPConsole;
 import org.nest.mvp.console.RCPConsoleManager;
 import org.nest.mvp.server.ServerContext;
@@ -98,36 +99,15 @@ public class AbstractComponentService implements ComponentService {
 		return invoke;
 	}
 
-	/**
-	 * 根据serviceid，类全名，spring的beanid
-	 * 
-	 * @param serviceid
-	 * @return
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
-	 * @throws ClassNotFoundException
-	 * @throws AppException
-	 */
 	public ComponentService getComponent(String serviceid)
 			throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, NestException {
-		Component com = null;// ConsoleManager.getManeger().getComponentByServiceid(serviceid);
-		ComponentService cs = com.getService();
-		cs.setComponent(com);
-	//	cs.setServerContext((ServerContext) tl.get());
-		return cs;
+		Component cs =PageCacheManager.newInstance().getPc().getCom(serviceid);
+		return cs.getService();
 	}
 
 	@Override
-	public Class getClazz() {
-		// TODO Auto-generated method stub
-		return this.getClass();
-	}
-
-	@Override
-	public Map loadComponent(HttpServletRequest request,
-			HttpServletResponse response, Map config) throws Exception {
-		// TODO Auto-generated method stub
+	public Map loadComponent(Map config) throws Exception {
 		return config;
 	}
 

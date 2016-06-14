@@ -3,9 +3,9 @@
 	xsi:schemaLocation="http://www.example.org/nestpage nestpage.xsd "> -->
 <pages>
 	<component id="123" beanid="beanid" class="class" jslib="jslib" jsobjname="jsobjname"></component>
-	<template id="123" beanid="beanid" class="class" jslib="jslib" jsobjname="jsobjname">
+	<template id="123" jslib="jslib" jsobjname="jsobjname">
 	</template>
-	<page url="123" beanid="beanid" class="class" superurl="superurl"
+	<page url="123" beanid="beanid" class="class" superurl="superurl" regin
 		jslib="jslib" csslib="csslib" templateid="templateid" path="path">
 		<map key="config1" value="config" />
 		<map key="config2" value="config" />
