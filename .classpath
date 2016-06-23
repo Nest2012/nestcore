@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="core/src"/>
+	<classpathentry kind="src" path="mvp/src"/>
+	<classpathentry kind="src" path="ui/src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.6.0_45"/>
+	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.j2eedt.core.MYECLIPSE_JAVAEE_6_CONTAINER"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/log4j.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-3.2.6-rmi-compatibility.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-aop-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-aspects-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-beans-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-build-src-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-context-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-context-support-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-core-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-data-commons-1.7.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-data-mongodb-1.4.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-expression-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-framework-bom-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-instrument-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-instrument-tomcat-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-jdbc-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-jms-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-orm-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-oxm-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-struts-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-test-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-tx-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-web-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-webmvc-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/spring-webmvc-portlet-3.2.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="ui/webroot/WEB-INF/lib/cglib.jar"/>
+	<classpathentry kind="output" path="ui/webroot/WEB-INF/classes"/>
+</classpath>
