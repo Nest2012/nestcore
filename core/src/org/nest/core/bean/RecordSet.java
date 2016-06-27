@@ -11,8 +11,6 @@ import java.util.Set;
 
 import org.nest.core.util.RandomGUID;
 
-
-
 /**
  * 与页面数据集Ext.lt.recordset功能对应<br>
  * 数据集中保存的数据结构与数据库查询结果相同。List内部保存Map对象，Map对象的Key值对应数据库的字段
